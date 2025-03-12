@@ -1,0 +1,234 @@
+CREATE DATABASE Developer;
+
+use Developer;
+
+CREATE TABLE programmers(
+	Programmer_Name VARCHAR(100) PRIMARY KEY,
+    DOB DATE,
+    DOJ DATE,
+    GENDER CHAR(1),
+    Primary_Language VARCHAR(100),
+    Secondary_Language VARCHAR(100),
+    Salary DECIMAL(10, 2)
+);
+
+INSERT INTO programmers(Programmer_Name, DOB,DOJ,GENDER, Primary_Language,Secondary_Language,Salary) VALUES
+('Tony Stark', '1970-05-29', '1990-05-11', 'M', 'Python', 'JavaScript', 15000),
+ ('Peter Parker', '2001-08-10', '2018-06-15', 'M', 'JavaScript', 'Python', 12000),
+ ('Thomas Shelby', '1980-11-20', '1999-09-12', 'M', 'Python', 'R', 16000),
+ ('John Wick', '1964-09-18', '1987-10-05', 'M', 'Java', 'C++', 18000),
+ ('Bruce Wayne', '1933-02-19', '1950-06-11', 'M', 'C#', 'Java', 14000),
+ ('Clark Kent', '1938-06-18', '1956-07-01', 'M', 'Java', 'Python', 13500),
+ ('Diana Prince', '1919-08-19', '1945-07-01', 'F', 'Ruby', 'Python', 17500),
+ ('Natasha Romanoff', '1984-11-22', '2000-05-30', 'F', 'Go', 'Rust', 14500),
+ ('Steve Rogers', '1918-07-04', '1943-04-10', 'M', 'C++', 'C', 15500),
+ ('Bruce Banner', '1969-12-18', '1989-07-20', 'M', 'Python', 'JavaScript', 14200),
+ ('Wanda Maximoff', '1989-02-13', '2005-09-12', 'F', 'Swift', 'Kotlin', 14800),
+ ('Stephen Strange', '1936-11-01', '1965-10-15', 'M', 'Fortran', 'Lisp', 15200),
+ ('Thor Odinson', '1900-07-20', '2002-06-01', 'M', 'R', 'Julia', 16200);
+ 
+ SELECT * from programmers;
+ 
+ -- Studies Table
+ 
+ CREATE TABLE studies(
+	Programmer_Name VARCHAR(100),
+    Institute VARCHAR(100),
+    Course VARCHAR(100),
+    Course_Fee DECIMAL(10,2),
+    FOREIGN KEY (Programmer_Name) REFERENCES programmers(Programmer_Name)
+);
+
+ INSERT INTO studies (Programmer_Name, Institute, Course, Course_Fee) VALUES
+ ('Tony Stark', 'MIT', 'Computer Science', 4500),
+ ('Peter Parker', 'Stanford', 'Data Science', 7200),
+ ('Thomas Shelby', 'Columbia', 'Artificial Intelligence', 22000),
+ ('John Wick', 'Oxford', 'Machine Learning', 5000),
+ ('Bruce Wayne', 'MIT', 'Cybersecurity', 4500),
+ ('Clark Kent', 'Stanford', 'Robotics', 6200),
+ ('Diana Prince', 'Oxford', 'Quantum Computing', 5200),
+ ('Natasha Romanoff', 'Cambridge', 'Bioinformatics', 14000),
+ ('Steve Rogers', 'MIT', 'Software Engineering', 4500),
+ ('Bruce Banner', 'Columbia', 'Cloud Computing', 11000),
+ ('Wanda Maximoff', 'Cambridge', 'Data Analytics', 6000),
+ ('Stephen Strange', 'MIT', 'Quantum Mechanics', 5000),
+ ('Thor Odinson', 'Columbia', 'Data Science', 48000);
+ 
+ SELECT * from studies;
+ 
+ 
+CREATE TABLE software(
+	Programmer_Name VARCHAR(100),
+    Software_Name VARCHAR(100),
+    Developed_In Varchar(100),
+    Software_Cost DECIMAL(10,2),
+    Development_Cost DECIMAL(10,2),
+    Sold INT,
+    FOREIGN KEY (Programmer_Name) REFERENCES programmers(Programmer_Name)
+);
+
+INSERT INTO software (Programmer_Name, Software_Name, Developed_In, Software_Cost, 
+Development_Cost, Sold) VALUES
+ ('Tony Stark', 'Jarvis', 'Python', 15000, 30000, 150),
+ ('Peter Parker', 'Spider Tracker', 'JavaScript', 8000, 20000, 85),
+ ('Thomas Shelby', 'AI Advisor', 'Python', 20000, 50000, 70),
+ ('John Wick', 'Assassin App', 'Java', 18000, 35000, 60),
+ ('Bruce Wayne', 'Bat Computer', 'C#', 25000, 60000, 90),
+ ('Clark Kent', 'Super Scanner', 'Java', 12000, 30000, 55),
+ ('Diana Prince', 'Lasso of Truth', 'Ruby', 10000, 25000, 45),
+ ('Natasha Romanoff', 'Black Widow Network', 'Go', 14000, 35000, 75),
+ ('Steve Rogers', 'Shield Defense', 'C++', 16000, 40000, 80),
+ ('Bruce Banner', 'Hulk Smash App', 'Python', 14000, 30000, 65),
+ ('Wanda Maximoff', 'Hex Control', 'Swift', 12000, 28000, 50),
+ ('Stephen Strange', 'Time Manipulator', 'Fortran', 16000, 45000, 70),
+ ('Thor Odinson', 'Mjolnir Control', 'R', 18000, 50000, 100);
+ 
+ SELECT * FROM software;
+ 
+ -- Practice Questions
+
+-- Basic Queries (SELECT, WHERE, ORDER BY):
+
+-- Q1: List the names and dates of birth of all programmers.
+
+    SELECT programmer_Name, DOB from programmers;  
+-- Q2: Display the names of programmers whose primary language is 'Python'. 
+    
+    SELECT programmer_Name from programmers where Primary_Language = 'Python';
+    
+-- Q3: Show the names of programmers who joined the company after the year 2000.
+    
+    SELECT programmer_Name from programmers where YEAR(DOJ) > 2000;
+    
+-- Q4: List the names and salaries of all female programmers. 
+
+    SELECT programmer_Name, Salary from programmers where Gender = 'F'; 
+    
+-- Q5: Display the names of programmers sorted by their date of birth in ascending order.
+   
+   SELECT programmer_Name from programmers ORDER BY DOB ASC;
+   
+-- Q6: Find the names of programmers whose secondary language is 'Java'.
+
+	SELECT programmer_Name from programmers where Secondary_Language = 'Java';
+  
+-- Q7: Show the details of programmers who earn a salary greater than $15,000.  
+
+	SELECT * from programmers where Salary > 15000;
+-- Q8: List the names of programmers whose primary language is 'C++' and who were born before 1970. 
+
+	SELECT programmer_Name from programmers where Primary_Language = 'C++' and DOB < '1970-01-01';
+    
+-- Q9: Display the software names developed in 'Java'. 
+
+	SELECT Software_Name from software where Developed_In = 'Java';
+    
+-- Q10: List the courses studied at 'MIT'. 
+
+	SELECT Course From studies where Institute = 'MIT';
+
+-- Aggregate Functions (COUNT, AVG, MIN, MAX, SUM):
+
+-- Q11: What is the average salary of all programmers? 
+
+	SELECT AVG(Salary) As Average_Salary From programmers;
+    
+-- Q12: How many programmers know 'Python' as their primary language? 
+	
+    SELECT Count(*) from programmers where Primary_language = 'Python';
+    
+-- Q13: What is the highest salary paid to a programmer?  
+	
+    SELECT MAX(Salary) From programmers;
+	SELECT MAX(Salary) AS Highest_Salary From programmers;
+    
+-- Q14: What is the total development cost of all software? 
+
+	SELECT SUM(Development_Cost) From Software;
+    SELECT SUM(Development_Cost) AS Total_Development_Cost FROM software;
+
+-- Q15: What is the minimum course fee paid by a programmer? 
+
+	SELECT MIN(Course_Fee) from studies;
+    SELECT MIN(Course_Fee) AS Minimum_Course_Fee FROM studies;
+
+-- Q16: How many software packages were sold in total?  
+	
+    SELECT SUM(Sold) FROM Software;
+    SELECT SUM(Sold) AS Total_Software_Sold FROM software;
+
+-- Q17: What is the average cost of a course at 'Columbia'? 
+
+	SELECT AVG(Course_Fee) FROM studies where Institute = 'Columbia';
+    SELECT AVG(Course_Fee) AS Average_Course_Fee FROM studies WHERE Institute = 'Columbia';
+
+-- Q18: How many male programmers are in the database?
+
+	SELECT Count(*) from programmers where GENDER = 'M';
+    
+-- Q19: What is the sum of the software costs of packages developed in 'R'?  
+	
+    SELECT SUM(Software_Cost) From software Where Developed_In = 'R';
+    SELECT SUM(Software_Cost) AS Total_Software_Cost FROM software WHERE Developed_In = 'R';
+
+-- Q20: What is the maximum development cost for a package? 
+
+	SELECT MAX(Development_Cost) from software ;
+    SELECT MAX(Development_Cost) AS Max_Development_Cost FROM software;
+
+
+-- Grouping and Filtering (GROUP BY, HAVING):
+
+-- Q21: Display the average salary for each primary language.
+
+	SELECT AVG(Salary),Primary_Language from programmers GROUP BY Primary_Language;
+    SELECT Primary_Language, AVG(Salary) AS Average_Salary 
+	FROM programmers GROUP BY Primary_Language;
+
+-- Q22: How many software packages were developed by each programmer?
+
+	SELECT Count(Software_Name), programmer_Name FROM software GROUP BY Programmer_Name;
+    SELECT Programmer_Name, COUNT(Software_Name) AS Software_Count 
+	FROM software GROUP BY Programmer_Name;
+
+-- Q23: Show the number of programmers for each gender. 
+
+	SELECT GENDER, Count(*) from programmers GROUP BY GENDER;
+    SELECT GENDER, COUNT(*) AS Programmer_Count 
+	FROM programmers GROUP BY GENDER;
+
+-- Q24: List the institutes and the number of courses offered by each.
+
+	SELECT Institute, Count(Course) from studies GROUP BY Institute;
+    SELECT Institute, COUNT(Course) AS Course_Count FROM studies GROUP BY Institute;
+
+-- Q25: Find the primary languages where the average salary is greater than $15,000.
+
+	SELECT Primary_Language from programmers group by Primary_Language HAVING AVG(Salary)  > 15000;
+    SELECT Primary_Language FROM programmers 
+	GROUP BY Primary_Language HAVING AVG(Salary) > 15000;
+
+-- Q26: Display the total sales for each software developer. 
+
+	select Programmer_Name, SUM(Sold) from software group by Programmer_Name;
+    SELECT Programmer_Name, SUM(Sold) AS Total_Sales FROM software GROUP BY Programmer_Name;
+
+-- Q27: List the software languages and the number of software packages developed in each.
+
+	select Developed_In, Count(Software_Name) From software GROUP BY Developed_In;
+    SELECT Developed_In, COUNT(Software_Name) AS Software_Count FROM software GROUP BY Developed_In;
+
+-- Q28: Show the average course fee for each institute. 
+
+	select Institute, AVG(Course_Fee) From studies group by Institute;
+    SELECT Institute, AVG(Course_Fee) AS Average_Course_Fee FROM studies GROUP BY Institute;
+
+-- Q29: Find the programmers who have developed more than one software package.
+
+	select Programmer_Name From software group by Programmer_name having Count(software_Name) > 1;
+    SELECT Programmer_Name FROM software GROUP BY Programmer_Name HAVING COUNT(Software_Name) > 1;
+
+-- Q30: Display the number of courses for each institute, but only for institutes with more than two courses.
+
+	select Institute, Count(Course) from studies group by Institute having count(Course) > 2;
+    SELECT Institute, COUNT(Course) AS Course_Count FROM studies GROUP BY Institute HAVING COUNT(Course) > 2;
