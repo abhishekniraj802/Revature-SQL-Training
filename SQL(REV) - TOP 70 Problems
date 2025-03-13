@@ -232,3 +232,50 @@ Development_Cost, Sold) VALUES
 
 	select Institute, Count(Course) from studies group by Institute having count(Course) > 2;
     SELECT Institute, COUNT(Course) AS Course_Count FROM studies GROUP BY Institute HAVING COUNT(Course) > 2;
+
+-- Joins (INNER JOIN, LEFT JOIN, RIGHT JOIN):
+
+-- Q31: Display the names of programmers and the software they developed.
+	
+    Select p.programmer_Name, s.Software_Name from programmers p INNER JOIN software s ON p.programmer_Name = s.Programmer_Name;
+    
+-- Q32: List the programmers and the institutes where they studied.  
+
+	Select p.programmer_Name, s.Institute from programmers p INNER JOIN  studies s ON p.programmer_Name = s.programmer_Name;
+    
+-- Q33: Show the names of programmers and their course fees. 
+
+	Select p.programmer_Name, c.course_fee from programmers p INNER JOIN studies c ON p.programmer_Name = c.programmer_Name;
+
+-- Q34: Find the software names and the institutes where the developers studied. 
+
+	Select soft.Software_Name, i.Institute from software soft INNER JOIN studies  i ON soft.Programmer_Name = i.programmer_Name;
+
+-- Q35: Display the programmers and the courses they studied, including those who didn't study any course. 
+
+	Select p.programmer_Name, c.Course from programmers p LEFT JOIN studies c ON p.programmer_Name = c.programmer_Name;
+
+-- Q36: Show the names of programmers and their software, including those who didn't develop any software. 
+	
+    Select p.programmer_Name,s.Software_Name from programmers p LEFT JOIN software s ON p.Programmer_Name = s.Programmer_Name;
+
+-- Q37: List the institutes and the software developed by their students.
+
+	Select st.Institute, s.Software_Name from studies st Left Join software s ON st.Programmer_Name = s.Programmer_Name;
+
+-- Q38: Display the programmer names, their primary languages, and the software names developed in those languages.
+
+	SELECT p.Programmer_Name, p.Primary_Language, s.Software_Name 
+	FROM programmers p 
+	JOIN software s 
+	ON p.Programmer_Name = s.Programmer_Name
+	WHERE p.Primary_Language = s.Developed_In;
+
+-- Q39: Find the programmer names and the courses they studied, only for courses with fees greater than $5,000.
+
+	SELECT s.Programmer_Name, s.Course FROM studies s WHERE s.Course_Fee > 5000;
+
+-- Q40: Show the software names and the institute names where the developers studied, only for institutes located at 'MIT'.
+
+	SELECT s.Software_Name, st.Institute FROM software s JOIN studies st 
+	ON s.Programmer_Name = st.Programmer_Name WHERE st.Institute = 'MIT';
